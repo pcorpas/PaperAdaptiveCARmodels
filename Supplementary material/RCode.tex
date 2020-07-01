@@ -1,0 +1,812 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage[]{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\PassOptionsToPackage{hyphens}{url} % url is loaded by hyperref
+\usepackage[unicode=true]{hyperref}
+\hypersetup{
+            pdftitle={R code to obtain results},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+
+\title{R code to obtain results}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\section{1. Execution of models in WinBUGS using the R2WinBUGS and pbugs
+libraries}\label{execution-of-models-in-winbugs-using-the-r2winbugs-and-pbugs-libraries}
+
+\subsection{Load libraries and data}\label{load-libraries-and-data}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Working directory}
+\NormalTok{DirMain =}\StringTok{ " "}  \CommentTok{# Set an appropriate directory}
+\KeywordTok{setwd}\NormalTok{(DirMain)}
+\CommentTok{# Load libraries and data}
+\KeywordTok{library}\NormalTok{(R2WinBUGS)  }\CommentTok{# For running WinBUGS from R}
+\KeywordTok{library}\NormalTok{(knitr)}
+\KeywordTok{library}\NormalTok{(pbugs)  }\CommentTok{# For running the models in parallel calls to WinBUGS}
+\KeywordTok{library}\NormalTok{(spdep)  }\CommentTok{# For preparing information about spatial neighbors of each geographic}
+\CommentTok{# unit to be used in WinBUGS (using the}
+\CommentTok{# poly2nb and nb2WB functions)}
+\KeywordTok{load}\NormalTok{(}\StringTok{"data.RData"}\NormalTok{)}
+\CommentTok{# Loaded data Obs: 4-dimensional array}
+\CommentTok{# with the observed mortality cases for}
+\CommentTok{# each year of the study, sex, geographic}
+\CommentTok{# unit and disease Exp: 4-dimensional}
+\CommentTok{# array with the expected mortality cases}
+\CommentTok{# for each year of the study, sex,}
+\CommentTok{# geographic unit and disease carto:}
+\CommentTok{# SpatialPolygonsDataFrame of the study}
+\CommentTok{# region}
+\NormalTok{carto.nb <-}\StringTok{ }\KeywordTok{poly2nb}\NormalTok{(carto)  }\CommentTok{# Neighbours list of each geographic unit with class nb}
+\NormalTok{carto.wb <-}\StringTok{ }\KeywordTok{nb2WB}\NormalTok{(carto.nb)  }\CommentTok{# List with the adjacency vector (carto.wb$adj) and the}
+\CommentTok{# number of neighbors of each geographic}
+\CommentTok{# unit (carto.wb$num) to use in WinBUGS}
+\NormalTok{index <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\KeywordTok{cumsum}\NormalTok{(carto.wb}\OperatorTok{$}\NormalTok{num))  }\CommentTok{# Vector to identify the positions }
+\CommentTok{# of the neighbors of each geographic}
+\CommentTok{# unit}
+\NormalTok{causes <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{9}\OperatorTok{:}\DecValTok{12}\NormalTok{, }\DecValTok{15}\OperatorTok{:}\DecValTok{21}\NormalTok{)  }\CommentTok{# Studied mortality causes}
+\NormalTok{sex <-}\StringTok{ }\DecValTok{1}  \CommentTok{# Mens}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Multivariate adaptive BYM
+model}\label{multivariate-adaptive-bym-model}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Multivariate adaptive BYM model,}
+\CommentTok{# WinBUGS code}
+\NormalTok{AdaptiveBYM_model <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{() \{}
+    \CommentTok{# Likelihood}
+    \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{Nareas) \{}
+        \ControlFlowTok{for}\NormalTok{ (j }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{Ndiseases) \{}
+\NormalTok{            O[i, j] }\OperatorTok{~}\StringTok{ }\KeywordTok{dpois}\NormalTok{(lambda[i, j])}
+            \CommentTok{# Modeling of the mean for each census}
+            \CommentTok{# tract and disease}
+            \KeywordTok{log}\NormalTok{(lambda[i, j]) <-}\StringTok{ }\KeywordTok{log}\NormalTok{(E[i, }
+\NormalTok{                j]) }\OperatorTok{+}\StringTok{ }\NormalTok{mu[j] }\OperatorTok{+}\StringTok{ }\NormalTok{phi[i, j] }\OperatorTok{+}\StringTok{ }
+\StringTok{                }\NormalTok{sd.theta[j] }\OperatorTok{*}\StringTok{ }\NormalTok{theta[i, j]}
+            \CommentTok{# SMR for each census tract and disease}
+\NormalTok{            SMR[i, j] <-}\StringTok{ }\KeywordTok{exp}\NormalTok{(mu[j] }\OperatorTok{+}\StringTok{ }\NormalTok{phi[i, }
+\NormalTok{                j] }\OperatorTok{+}\StringTok{ }\NormalTok{sd.theta[j] }\OperatorTok{*}\StringTok{ }\NormalTok{theta[i, }
+\NormalTok{                j])}
+            \CommentTok{# Prior distribution for spatial effects}
+\NormalTok{            phi[i, j] }\OperatorTok{~}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(mean.phi[i, }
+\NormalTok{                j], prec.phi[i, j])}
+            \CommentTok{# Prior distribution for non-spatial}
+            \CommentTok{# effects}
+\NormalTok{            theta[i, j] }\OperatorTok{~}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{        \}}
+\NormalTok{    \}}
+    \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{n.adj) \{}
+\NormalTok{        sqrt.c.adj[i] <-}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(c[adj[i]])}
+        \ControlFlowTok{for}\NormalTok{ (j }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{Ndiseases) \{}
+\NormalTok{            phi.adj[i, j] <-}\StringTok{ }\NormalTok{phi[adj[i], }
+\NormalTok{                j]}
+\NormalTok{        \}}
+\NormalTok{    \}}
+    \CommentTok{# Precision of the conditioned}
+    \CommentTok{# distribution of spatial effects}
+    \ControlFlowTok{for}\NormalTok{ (j }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{Ndiseases) \{}
+\NormalTok{        prec.phi[}\DecValTok{1}\NormalTok{, j] <-}\StringTok{ }\KeywordTok{pow}\NormalTok{(sd.phi[j], }
+            \OperatorTok{-}\DecValTok{2}\NormalTok{) }\OperatorTok{*}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(c[}\DecValTok{1}\NormalTok{]) }\OperatorTok{*}\StringTok{ }\KeywordTok{sum}\NormalTok{(sqrt.c.adj[index[}\DecValTok{1}\NormalTok{]}\OperatorTok{:}\NormalTok{index[}\DecValTok{2}\NormalTok{]])}
+        \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{2}\OperatorTok{:}\NormalTok{Nareas) \{}
+\NormalTok{            prec.phi[i, j] <-}\StringTok{ }\KeywordTok{pow}\NormalTok{(sd.phi[j], }
+                \OperatorTok{-}\DecValTok{2}\NormalTok{) }\OperatorTok{*}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(c[i]) }\OperatorTok{*}\StringTok{ }\KeywordTok{sum}\NormalTok{(sqrt.c.adj[(index[i] }\OperatorTok{+}\StringTok{ }
+\StringTok{                }\DecValTok{1}\NormalTok{)}\OperatorTok{:}\NormalTok{index[i }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{]])}
+\NormalTok{        \}}
+\NormalTok{    \}}
+    \CommentTok{# Mean of the conditioned distribution of}
+    \CommentTok{# spatial effects}
+    \ControlFlowTok{for}\NormalTok{ (j }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{Ndiseases) \{}
+\NormalTok{        mean.phi[}\DecValTok{1}\NormalTok{, j] <-}\StringTok{ }\KeywordTok{inprod2}\NormalTok{(sqrt.c.adj[index[}\DecValTok{1}\NormalTok{]}\OperatorTok{:}\NormalTok{index[}\DecValTok{2}\NormalTok{]], }
+\NormalTok{            phi.adj[index[}\DecValTok{1}\NormalTok{]}\OperatorTok{:}\NormalTok{index[}\DecValTok{2}\NormalTok{], j])}\OperatorTok{/}\KeywordTok{sum}\NormalTok{(sqrt.c.adj[index[}\DecValTok{1}\NormalTok{]}\OperatorTok{:}\NormalTok{index[}\DecValTok{2}\NormalTok{]])}
+        \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{2}\OperatorTok{:}\NormalTok{Nareas) \{}
+\NormalTok{            mean.phi[i, j] <-}\StringTok{ }\KeywordTok{inprod2}\NormalTok{(sqrt.c.adj[(index[i] }\OperatorTok{+}\StringTok{ }
+\StringTok{                }\DecValTok{1}\NormalTok{)}\OperatorTok{:}\NormalTok{index[i }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{]], phi.adj[(index[i] }\OperatorTok{+}\StringTok{ }
+\StringTok{                }\DecValTok{1}\NormalTok{)}\OperatorTok{:}\NormalTok{index[i }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{], j])}\OperatorTok{/}\KeywordTok{sum}\NormalTok{(sqrt.c.adj[(index[i] }\OperatorTok{+}\StringTok{ }
+\StringTok{                }\DecValTok{1}\NormalTok{)}\OperatorTok{:}\NormalTok{index[i }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{]])}
+\NormalTok{        \}}
+        \CommentTok{# Sum-to-zero restriction for spatial}
+        \CommentTok{# effects}
+\NormalTok{        ceros[j] <-}\StringTok{ }\DecValTok{0}
+\NormalTok{        ceros[j] }\OperatorTok{~}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(sum.phi[j], }\DecValTok{10}\NormalTok{)}
+\NormalTok{        sum.phi[j] <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(phi[, j])}
+\NormalTok{    \}}
+    \CommentTok{# Prior distributions for c}
+    \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{Nareas) \{}
+\NormalTok{        c[i] }\OperatorTok{~}\StringTok{ }\KeywordTok{dgamma}\NormalTok{(tau, tau) }\OperatorTok{%_%}\StringTok{ }\KeywordTok{I}\NormalTok{(}\FloatTok{0.001}\NormalTok{, }
+\NormalTok{            )}
+\NormalTok{    \}}
+\NormalTok{    tau <-}\StringTok{ }\KeywordTok{pow}\NormalTok{(sd.c, }\OperatorTok{-}\DecValTok{2}\NormalTok{)}
+\NormalTok{    sd.c }\OperatorTok{~}\StringTok{ }\KeywordTok{dunif}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{5}\NormalTok{)}
+    \CommentTok{# Other prior distributions}
+    \ControlFlowTok{for}\NormalTok{ (j }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{Ndiseases) \{}
+\NormalTok{        sd.phi[j] }\OperatorTok{~}\StringTok{ }\KeywordTok{dunif}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{5}\NormalTok{)}
+\NormalTok{        sd.theta[j] }\OperatorTok{~}\StringTok{ }\KeywordTok{dunif}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{5}\NormalTok{)}
+\NormalTok{        mu[j] }\OperatorTok{~}\StringTok{ }\KeywordTok{dflat}\NormalTok{()}
+\NormalTok{    \}}
+\NormalTok{\}}
+\CommentTok{# Object where the results for each set}
+\CommentTok{# of diseases will be saved}
+\NormalTok{results.AdaptiveBYM <-}\StringTok{ }\KeywordTok{list}\NormalTok{()}
+\CommentTok{# Run multivariate adaptive BYM model for}
+\CommentTok{# each set of diseases}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{15}\NormalTok{) \{}
+    \CommentTok{# Selection of mortality causes}
+\NormalTok{    causes.id <-}\StringTok{ }\NormalTok{causes[}\OperatorTok{-}\KeywordTok{c}\NormalTok{(i)]}
+    \CommentTok{# Data}
+\NormalTok{    data <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{O =} \KeywordTok{apply}\NormalTok{(Obs[, sex, , causes.id], }
+        \KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{), sum), }\DataTypeTok{E =} \KeywordTok{apply}\NormalTok{(Exp[, sex, }
+\NormalTok{        , causes.id], }\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{), sum), }\DataTypeTok{Nareas =} \KeywordTok{dim}\NormalTok{(Obs)[}\DecValTok{3}\NormalTok{], }
+        \DataTypeTok{Ndiseases =} \KeywordTok{length}\NormalTok{(causes.id), }\DataTypeTok{n.adj =} \KeywordTok{length}\NormalTok{(carto.wb}\OperatorTok{$}\NormalTok{adj), }
+        \DataTypeTok{adj =}\NormalTok{ carto.wb}\OperatorTok{$}\NormalTok{adj, }\DataTypeTok{index =}\NormalTok{ index)}
+    \CommentTok{# Initial values}
+\NormalTok{    initials <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{() \{}
+        \KeywordTok{list}\NormalTok{(}\DataTypeTok{mu =} \KeywordTok{rnorm}\NormalTok{(data}\OperatorTok{$}\NormalTok{Ndiseases, }\DecValTok{0}\NormalTok{, }
+            \DecValTok{1}\NormalTok{), }\DataTypeTok{sd.phi =} \KeywordTok{runif}\NormalTok{(data}\OperatorTok{$}\NormalTok{Ndiseases, }
+            \DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }\DataTypeTok{sd.theta =} \KeywordTok{runif}\NormalTok{(data}\OperatorTok{$}\NormalTok{Ndiseases, }
+            \DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }\DataTypeTok{phi =} \KeywordTok{matrix}\NormalTok{(}\KeywordTok{rnorm}\NormalTok{(data}\OperatorTok{$}\NormalTok{Nareas }\OperatorTok{*}\StringTok{ }
+\StringTok{            }\NormalTok{data}\OperatorTok{$}\NormalTok{Ndiseases), }\DataTypeTok{nrow =}\NormalTok{ data}\OperatorTok{$}\NormalTok{Nareas, }
+            \DataTypeTok{ncol =}\NormalTok{ data}\OperatorTok{$}\NormalTok{Ndiseases), }\DataTypeTok{theta =} \KeywordTok{matrix}\NormalTok{(}\KeywordTok{rnorm}\NormalTok{(data}\OperatorTok{$}\NormalTok{Nareas }\OperatorTok{*}\StringTok{ }
+\StringTok{            }\NormalTok{data}\OperatorTok{$}\NormalTok{Ndiseases), }\DataTypeTok{nrow =}\NormalTok{ data}\OperatorTok{$}\NormalTok{Nareas, }
+            \DataTypeTok{ncol =}\NormalTok{ data}\OperatorTok{$}\NormalTok{Ndiseases), }\DataTypeTok{c =} \KeywordTok{runif}\NormalTok{(data}\OperatorTok{$}\NormalTok{Nareas, }
+            \FloatTok{0.9}\NormalTok{, }\FloatTok{1.1}\NormalTok{), }\DataTypeTok{sd.c =} \KeywordTok{runif}\NormalTok{(}\DecValTok{1}\NormalTok{, }\FloatTok{0.5}\NormalTok{, }
+            \FloatTok{0.6}\NormalTok{))}
+\NormalTok{    \}}
+    \CommentTok{# Variables to retrive}
+\NormalTok{    param <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"mu"}\NormalTok{, }\StringTok{"lambda"}\NormalTok{, }\StringTok{"sd.phi"}\NormalTok{, }
+        \StringTok{"phi"}\NormalTok{, }\StringTok{"sd.theta"}\NormalTok{, }\StringTok{"theta"}\NormalTok{, }\StringTok{"SMR"}\NormalTok{, }
+        \StringTok{"c"}\NormalTok{, }\StringTok{"sd.c"}\NormalTok{, }\StringTok{"tau"}\NormalTok{)}
+    \CommentTok{# Calls to WinBUGS}
+\NormalTok{    results.AdaptiveBYM[[i]] <-}\StringTok{ }\KeywordTok{pbugs}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ data, }
+        \DataTypeTok{inits =}\NormalTok{ initials, }\DataTypeTok{parameters.to.save =}\NormalTok{ param, }
+        \DataTypeTok{model =}\NormalTok{ AdaptiveBYM_model, }\DataTypeTok{n.iter =} \FloatTok{2e+05}\NormalTok{, }
+        \DataTypeTok{n.burnin =} \DecValTok{50000}\NormalTok{, }\DataTypeTok{n.chains =} \DecValTok{3}\NormalTok{, }\DataTypeTok{DIC =}\NormalTok{ F)}
+\NormalTok{\}}
+\CommentTok{# Save results}
+\KeywordTok{save}\NormalTok{(results.AdaptiveBYM, }\DataTypeTok{file =} \StringTok{"Results/results.AdaptiveBYM.RData"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Multivariate adaptive Leroux
+model}\label{multivariate-adaptive-leroux-model}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Multivariate adaptive Leroux model,}
+\CommentTok{# WinBUGS code}
+\NormalTok{AdaptiveLeroux_model <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{() \{}
+    \CommentTok{# Likelihood}
+    \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{Nareas) \{}
+        \ControlFlowTok{for}\NormalTok{ (j }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{Ndiseases) \{}
+\NormalTok{            O[i, j] }\OperatorTok{~}\StringTok{ }\KeywordTok{dpois}\NormalTok{(lambda[i, j])}
+            \CommentTok{# Modeling of the mean for each census}
+            \CommentTok{# tract and disease}
+            \KeywordTok{log}\NormalTok{(lambda[i, j]) <-}\StringTok{ }\KeywordTok{log}\NormalTok{(E[i, }
+\NormalTok{                j]) }\OperatorTok{+}\StringTok{ }\NormalTok{mu[j] }\OperatorTok{+}\StringTok{ }\NormalTok{eta[i, j]}
+            \CommentTok{# SMR for each census tract and disease}
+\NormalTok{            SMR[i, j] <-}\StringTok{ }\KeywordTok{exp}\NormalTok{(mu[j] }\OperatorTok{+}\StringTok{ }\NormalTok{eta[i, }
+\NormalTok{                j])}
+            \CommentTok{# Prior distribution for spatial effects}
+\NormalTok{            eta[i, j] }\OperatorTok{~}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(mean.eta[i, }
+\NormalTok{                j], prec.eta[i, j])}
+\NormalTok{        \}}
+\NormalTok{    \}}
+    \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{n.adj) \{}
+\NormalTok{        sqrt.c.adj[i] <-}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(c[adj[i]])}
+        \ControlFlowTok{for}\NormalTok{ (j }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{Ndiseases) \{}
+\NormalTok{            eta.adj[i, j] <-}\StringTok{ }\NormalTok{eta[adj[i], }
+\NormalTok{                j]}
+\NormalTok{        \}}
+\NormalTok{    \}}
+    \CommentTok{# Precision of the conditioned}
+    \CommentTok{# distribution of spatial effects}
+    \ControlFlowTok{for}\NormalTok{ (j }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{Ndiseases) \{}
+\NormalTok{        prec.eta[}\DecValTok{1}\NormalTok{, j] <-}\StringTok{ }\KeywordTok{pow}\NormalTok{(sd.eta[j], }
+            \OperatorTok{-}\DecValTok{2}\NormalTok{) }\OperatorTok{*}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(c[}\DecValTok{1}\NormalTok{]) }\OperatorTok{*}\StringTok{ }\NormalTok{(rho[j] }\OperatorTok{*}\StringTok{ }
+\StringTok{            }\KeywordTok{sum}\NormalTok{(sqrt.c.adj[index[}\DecValTok{1}\NormalTok{]}\OperatorTok{:}\NormalTok{index[}\DecValTok{2}\NormalTok{]]) }\OperatorTok{+}\StringTok{ }
+\StringTok{            }\DecValTok{1} \OperatorTok{-}\StringTok{ }\NormalTok{rho[j])}
+        \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{2}\OperatorTok{:}\NormalTok{Nareas) \{}
+\NormalTok{            prec.eta[i, j] <-}\StringTok{ }\KeywordTok{pow}\NormalTok{(sd.eta[j], }
+                \OperatorTok{-}\DecValTok{2}\NormalTok{) }\OperatorTok{*}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(c[i]) }\OperatorTok{*}\StringTok{ }\NormalTok{(rho[j] }\OperatorTok{*}\StringTok{ }
+\StringTok{                }\KeywordTok{sum}\NormalTok{(sqrt.c.adj[(index[i] }\OperatorTok{+}\StringTok{ }
+\StringTok{                  }\DecValTok{1}\NormalTok{)}\OperatorTok{:}\NormalTok{index[i }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{]]) }\OperatorTok{+}\StringTok{ }\DecValTok{1} \OperatorTok{-}\StringTok{ }
+\StringTok{                }\NormalTok{rho[j])}
+\NormalTok{        \}}
+\NormalTok{    \}}
+    \CommentTok{# Mean of the conditioned distribution of}
+    \CommentTok{# spatial effects}
+    \ControlFlowTok{for}\NormalTok{ (j }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{Ndiseases) \{}
+\NormalTok{        mean.eta[}\DecValTok{1}\NormalTok{, j] <-}\StringTok{ }\NormalTok{(rho[j] }\OperatorTok{*}\StringTok{ }\KeywordTok{inprod2}\NormalTok{(sqrt.c.adj[index[}\DecValTok{1}\NormalTok{]}\OperatorTok{:}\NormalTok{index[}\DecValTok{2}\NormalTok{]], }
+\NormalTok{            eta.adj[index[}\DecValTok{1}\NormalTok{]}\OperatorTok{:}\NormalTok{index[}\DecValTok{2}\NormalTok{], j]))}\OperatorTok{/}\NormalTok{(rho[j] }\OperatorTok{*}\StringTok{ }
+\StringTok{            }\KeywordTok{sum}\NormalTok{(sqrt.c.adj[index[}\DecValTok{1}\NormalTok{]}\OperatorTok{:}\NormalTok{index[}\DecValTok{2}\NormalTok{]]) }\OperatorTok{+}\StringTok{ }
+\StringTok{            }\DecValTok{1} \OperatorTok{-}\StringTok{ }\NormalTok{rho[j])}
+        \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{2}\OperatorTok{:}\NormalTok{Nareas) \{}
+\NormalTok{            mean.eta[i, j] <-}\StringTok{ }\NormalTok{(rho[j] }\OperatorTok{*}\StringTok{ }\KeywordTok{inprod2}\NormalTok{(sqrt.c.adj[(index[i] }\OperatorTok{+}\StringTok{ }
+\StringTok{                }\DecValTok{1}\NormalTok{)}\OperatorTok{:}\NormalTok{index[i }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{]], eta.adj[(index[i] }\OperatorTok{+}\StringTok{ }
+\StringTok{                }\DecValTok{1}\NormalTok{)}\OperatorTok{:}\NormalTok{index[i }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{], j]))}\OperatorTok{/}\NormalTok{(rho[j] }\OperatorTok{*}\StringTok{ }
+\StringTok{                }\KeywordTok{sum}\NormalTok{(sqrt.c.adj[(index[i] }\OperatorTok{+}\StringTok{ }
+\StringTok{                  }\DecValTok{1}\NormalTok{)}\OperatorTok{:}\NormalTok{index[i }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{]]) }\OperatorTok{+}\StringTok{ }\DecValTok{1} \OperatorTok{-}\StringTok{ }
+\StringTok{                }\NormalTok{rho[j])}
+\NormalTok{        \}}
+        \CommentTok{# Sum-to-zero restriction for spatial}
+        \CommentTok{# effects}
+\NormalTok{        ceros[j] <-}\StringTok{ }\DecValTok{0}
+\NormalTok{        ceros[j] }\OperatorTok{~}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(sum.eta[j], }\DecValTok{10}\NormalTok{)}
+\NormalTok{        sum.eta[j] <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(eta[, j])}
+\NormalTok{    \}}
+    \CommentTok{# Prior distributions for c}
+    \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{Nareas) \{}
+\NormalTok{        c[i] }\OperatorTok{~}\StringTok{ }\KeywordTok{dgamma}\NormalTok{(tau, tau) }\OperatorTok{%_%}\StringTok{ }\KeywordTok{I}\NormalTok{(}\FloatTok{0.001}\NormalTok{, }
+\NormalTok{            )}
+\NormalTok{    \}}
+\NormalTok{    tau <-}\StringTok{ }\KeywordTok{pow}\NormalTok{(sd.c, }\OperatorTok{-}\DecValTok{2}\NormalTok{)}
+\NormalTok{    sd.c }\OperatorTok{~}\StringTok{ }\KeywordTok{dunif}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{5}\NormalTok{)}
+    \CommentTok{# Other prior distributions}
+    \ControlFlowTok{for}\NormalTok{ (j }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{Ndiseases) \{}
+\NormalTok{        mu[j] }\OperatorTok{~}\StringTok{ }\KeywordTok{dflat}\NormalTok{()}
+\NormalTok{        sd.eta[j] }\OperatorTok{~}\StringTok{ }\KeywordTok{dunif}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{5}\NormalTok{)}
+\NormalTok{        rho[j] }\OperatorTok{~}\StringTok{ }\KeywordTok{dunif}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{    \}}
+\NormalTok{\}}
+\CommentTok{# Object where the results for each set}
+\CommentTok{# of diseases will be saved}
+\NormalTok{results.AdaptiveLeroux <-}\StringTok{ }\KeywordTok{list}\NormalTok{()}
+\CommentTok{# Run multivariate adaptive Leroux model}
+\CommentTok{# for each set of diseases}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{15}\NormalTok{) \{}
+    \CommentTok{# Selection of mortality causes}
+\NormalTok{    causes.id <-}\StringTok{ }\NormalTok{causes[}\OperatorTok{-}\KeywordTok{c}\NormalTok{(i)]}
+    \CommentTok{# Data}
+\NormalTok{    data <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{O =} \KeywordTok{apply}\NormalTok{(Obs[, sex, , causes.id], }
+        \KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{), sum), }\DataTypeTok{E =} \KeywordTok{apply}\NormalTok{(Exp[, sex, }
+\NormalTok{        , causes.id], }\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{), sum), }\DataTypeTok{Nareas =} \KeywordTok{dim}\NormalTok{(Obs)[}\DecValTok{3}\NormalTok{], }
+        \DataTypeTok{Ndiseases =} \KeywordTok{length}\NormalTok{(causes.id), }\DataTypeTok{n.adj =} \KeywordTok{length}\NormalTok{(carto.wb}\OperatorTok{$}\NormalTok{adj), }
+        \DataTypeTok{adj =}\NormalTok{ carto.wb}\OperatorTok{$}\NormalTok{adj, }\DataTypeTok{index =}\NormalTok{ index)}
+    \CommentTok{# Initial values}
+\NormalTok{    initials <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{() \{}
+        \KeywordTok{list}\NormalTok{(}\DataTypeTok{mu =} \KeywordTok{rnorm}\NormalTok{(data}\OperatorTok{$}\NormalTok{Ndiseases, }\DecValTok{0}\NormalTok{, }
+            \DecValTok{1}\NormalTok{), }\DataTypeTok{sd.eta =} \KeywordTok{runif}\NormalTok{(data}\OperatorTok{$}\NormalTok{Ndiseases, }
+            \DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }\DataTypeTok{rho =} \KeywordTok{runif}\NormalTok{(data}\OperatorTok{$}\NormalTok{Ndiseases, }
+            \DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }\DataTypeTok{eta =} \KeywordTok{matrix}\NormalTok{(}\KeywordTok{rnorm}\NormalTok{(data}\OperatorTok{$}\NormalTok{Nareas }\OperatorTok{*}\StringTok{ }
+\StringTok{            }\NormalTok{data}\OperatorTok{$}\NormalTok{Ndiseases), }\DataTypeTok{nrow =}\NormalTok{ data}\OperatorTok{$}\NormalTok{Nareas, }
+            \DataTypeTok{ncol =}\NormalTok{ data}\OperatorTok{$}\NormalTok{Ndiseases), }\DataTypeTok{c =} \KeywordTok{runif}\NormalTok{(data}\OperatorTok{$}\NormalTok{Nareas, }
+            \FloatTok{0.9}\NormalTok{, }\FloatTok{1.1}\NormalTok{), }\DataTypeTok{sd.c =} \KeywordTok{runif}\NormalTok{(}\DecValTok{1}\NormalTok{, }\FloatTok{0.5}\NormalTok{, }
+            \FloatTok{1.5}\NormalTok{))}
+\NormalTok{    \}}
+    \CommentTok{# Variables to retrive}
+\NormalTok{    param <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"mu"}\NormalTok{, }\StringTok{"lambda"}\NormalTok{, }\StringTok{"sd.eta"}\NormalTok{, }
+        \StringTok{"SMR"}\NormalTok{, }\StringTok{"c"}\NormalTok{, }\StringTok{"sd.c"}\NormalTok{, }\StringTok{"rho"}\NormalTok{)}
+    \CommentTok{# Calls to WinBUGS}
+\NormalTok{    results.AdaptiveLeroux[[i]] <-}\StringTok{ }\KeywordTok{pbugs}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ data, }
+        \DataTypeTok{inits =}\NormalTok{ initials, }\DataTypeTok{parameters.to.save =}\NormalTok{ param, }
+        \DataTypeTok{model =}\NormalTok{ AdaptiveLeroux_model, }\DataTypeTok{n.iter =} \FloatTok{2e+05}\NormalTok{, }
+        \DataTypeTok{n.burnin =} \DecValTok{50000}\NormalTok{, }\DataTypeTok{n.chains =} \DecValTok{3}\NormalTok{, }\DataTypeTok{DIC =}\NormalTok{ F)}
+\NormalTok{\}}
+\CommentTok{# Save results}
+\KeywordTok{save}\NormalTok{(results.AdaptiveLeroux, }\DataTypeTok{file =} \StringTok{"Results/results.AdaptiveLeroux.RData"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Univariate BYM model with spatial weights matrices of either
+unitary weights or using the values obtained from the multivariate
+analysis of 14
+diseases}\label{univariate-bym-model-with-spatial-weights-matrices-of-either-unitary-weights-or-using-the-values-obtained-from-the-multivariate-analysis-of-14-diseases}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Univariate BYM model, WinBUGS code}
+\NormalTok{BYM_model <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{() \{}
+    \CommentTok{# Likelihood}
+    \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{Nareas) \{}
+\NormalTok{        O[i] }\OperatorTok{~}\StringTok{ }\KeywordTok{dpois}\NormalTok{(lambda[i])}
+        \CommentTok{# Modeling of the mean for each census}
+        \CommentTok{# tract}
+        \KeywordTok{log}\NormalTok{(lambda[i]) <-}\StringTok{ }\KeywordTok{log}\NormalTok{(E[i]) }\OperatorTok{+}\StringTok{ }\NormalTok{mu }\OperatorTok{+}\StringTok{ }
+\StringTok{            }\NormalTok{sd.phi }\OperatorTok{*}\StringTok{ }\NormalTok{phi[i] }\OperatorTok{+}\StringTok{ }\NormalTok{sd.theta }\OperatorTok{*}\StringTok{ }
+\StringTok{            }\NormalTok{theta[i]}
+        \CommentTok{# SMR for each census tract}
+\NormalTok{        SMR[i] <-}\StringTok{ }\KeywordTok{exp}\NormalTok{(mu }\OperatorTok{+}\StringTok{ }\NormalTok{sd.phi }\OperatorTok{*}\StringTok{ }\NormalTok{phi[i] }\OperatorTok{+}\StringTok{ }
+\StringTok{            }\NormalTok{sd.theta }\OperatorTok{*}\StringTok{ }\NormalTok{theta[i])}
+        \CommentTok{# Prior distribution for non-spatial}
+        \CommentTok{# effects}
+\NormalTok{        theta[i] }\OperatorTok{~}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{    \}}
+    \CommentTok{# Prior distribution for spatial effects}
+\NormalTok{    phi[}\DecValTok{1}\OperatorTok{:}\NormalTok{Nareas] }\OperatorTok{~}\StringTok{ }\KeywordTok{car.normal}\NormalTok{(adj[], w[], }
+\NormalTok{        num[], }\DecValTok{1}\NormalTok{)}
+    \CommentTok{# Other prior distributions}
+\NormalTok{    sd.phi }\OperatorTok{~}\StringTok{ }\KeywordTok{dunif}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{5}\NormalTok{)}
+\NormalTok{    sd.theta }\OperatorTok{~}\StringTok{ }\KeywordTok{dunif}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{5}\NormalTok{)}
+\NormalTok{    mu }\OperatorTok{~}\StringTok{ }\KeywordTok{dflat}\NormalTok{()}
+\NormalTok{\}}
+\CommentTok{# Object where the results for each}
+\CommentTok{# disease will be saved}
+\NormalTok{results.BYM <-}\StringTok{ }\KeywordTok{list}\NormalTok{()}
+\CommentTok{# Run BYM model for each disease}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{15}\NormalTok{) \{}
+    \CommentTok{# }\AlertTok{ATTENTION}\CommentTok{: Specify spatial weights}
+    \CommentTok{# For unitary weights}
+\NormalTok{    w <-}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, }\KeywordTok{length}\NormalTok{(carto.wb}\OperatorTok{$}\NormalTok{adj))}
+    \CommentTok{# For adaptive weights:}
+\NormalTok{    index_neighbors <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\KeywordTok{dim}\NormalTok{(carto)[}\DecValTok{1}\NormalTok{], }
+\NormalTok{        carto.wb}\OperatorTok{$}\NormalTok{num), carto.wb}\OperatorTok{$}\NormalTok{adj)}
+\NormalTok{    w <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\KeywordTok{sqrt}\NormalTok{(results.AdaptiveBYM[[i]]}\OperatorTok{$}\NormalTok{mean}\OperatorTok{$}\NormalTok{c[index_neighbors[, }
+        \DecValTok{1}\NormalTok{]]) }\OperatorTok{*}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(results.AdaptiveBYM[[i]]}\OperatorTok{$}\NormalTok{mean}\OperatorTok{$}\NormalTok{c[index_neighbors[, }
+        \DecValTok{2}\NormalTok{]]))}
+    \CommentTok{# Data}
+\NormalTok{    data <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{O =} \KeywordTok{apply}\NormalTok{(Obs[, sex, , causes[i]], }
+        \DecValTok{2}\NormalTok{, sum), }\DataTypeTok{E =} \KeywordTok{apply}\NormalTok{(Exp[, sex, , causes[i]], }
+        \DecValTok{2}\NormalTok{, sum), }\DataTypeTok{Nareas =} \KeywordTok{dim}\NormalTok{(Obs)[}\DecValTok{3}\NormalTok{], }\DataTypeTok{adj =}\NormalTok{ carto.wb}\OperatorTok{$}\NormalTok{adj, }
+        \DataTypeTok{w =}\NormalTok{ w, }\DataTypeTok{num =}\NormalTok{ carto.wb}\OperatorTok{$}\NormalTok{num)}
+    \CommentTok{# Initial values}
+\NormalTok{    initials <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{() \{}
+        \KeywordTok{list}\NormalTok{(}\DataTypeTok{mu =} \KeywordTok{rnorm}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }\DataTypeTok{sd.phi =} \KeywordTok{runif}\NormalTok{(}\DecValTok{1}\NormalTok{, }
+            \DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }\DataTypeTok{sd.theta =} \KeywordTok{runif}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }
+            \DecValTok{1}\NormalTok{), }\DataTypeTok{phi =} \KeywordTok{rnorm}\NormalTok{(data}\OperatorTok{$}\NormalTok{Nareas), }
+            \DataTypeTok{theta =} \KeywordTok{rnorm}\NormalTok{(data}\OperatorTok{$}\NormalTok{Nareas))}
+\NormalTok{    \}}
+    \CommentTok{# Variables to retrive}
+\NormalTok{    param <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"mu"}\NormalTok{, }\StringTok{"lambda"}\NormalTok{, }\StringTok{"sd.phi"}\NormalTok{, }
+        \StringTok{"phi"}\NormalTok{, }\StringTok{"sd.theta"}\NormalTok{, }\StringTok{"theta"}\NormalTok{, }\StringTok{"SMR"}\NormalTok{)}
+\NormalTok{    results.BYM[[i]] <-}\StringTok{ }\KeywordTok{pbugs}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ data, }
+        \DataTypeTok{inits =}\NormalTok{ initials, }\DataTypeTok{parameters.to.save =}\NormalTok{ param, }
+        \DataTypeTok{model =}\NormalTok{ BYM_model, }\DataTypeTok{n.iter =} \FloatTok{1e+05}\NormalTok{, }
+        \DataTypeTok{n.burnin =} \DecValTok{30000}\NormalTok{, }\DataTypeTok{n.chains =} \DecValTok{3}\NormalTok{, }\DataTypeTok{DIC =}\NormalTok{ F)}
+\NormalTok{\}}
+\CommentTok{# For the model with unitary weights}
+\KeywordTok{save}\NormalTok{(results.BYM, }\DataTypeTok{file =} \StringTok{"Results/results.BYM.unitaryw.RData"}\NormalTok{)}
+\CommentTok{# For the model with adaptive weights}
+\KeywordTok{save}\NormalTok{(results.BYM, }\DataTypeTok{file =} \StringTok{"Results/results.BYM.adaptw.RData"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Univariate Leroux model with spatial weights matrices of
+either unitary weights or using the values obtained from the
+multivariate analysis of 14
+diseases}\label{univariate-leroux-model-with-spatial-weights-matrices-of-either-unitary-weights-or-using-the-values-obtained-from-the-multivariate-analysis-of-14-diseases}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Univariate Leroux model, WinBUGS code}
+\NormalTok{Leroux_model <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{() \{}
+    \CommentTok{# Likelihood}
+    \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{Nareas) \{}
+\NormalTok{        O[i] }\OperatorTok{~}\StringTok{ }\KeywordTok{dpois}\NormalTok{(lambda[i])}
+        \CommentTok{# Modeling of the mean for each census}
+        \CommentTok{# tract}
+        \KeywordTok{log}\NormalTok{(lambda[i]) <-}\StringTok{ }\KeywordTok{log}\NormalTok{(E[i]) }\OperatorTok{+}\StringTok{ }\NormalTok{mu }\OperatorTok{+}\StringTok{ }
+\StringTok{            }\NormalTok{sd.eta }\OperatorTok{*}\StringTok{ }\NormalTok{eta[i]}
+        \CommentTok{# SMR for each census tract}
+\NormalTok{        SMR[i] <-}\StringTok{ }\KeywordTok{exp}\NormalTok{(mu }\OperatorTok{+}\StringTok{ }\NormalTok{sd.eta }\OperatorTok{*}\StringTok{ }\NormalTok{eta[i])}
+        \CommentTok{# Prior distribution for spatial effects}
+\NormalTok{        eta[i] }\OperatorTok{~}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(mean.eta[i], prec.eta[i])}
+\NormalTok{    \}}
+    \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{n.adj) \{}
+\NormalTok{        sqrt.c.adj[i] <-}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(c[adj[i]])}
+\NormalTok{        eta.adj[i] <-}\StringTok{ }\NormalTok{eta[adj[i]]}
+\NormalTok{    \}}
+    \CommentTok{# Precision of conditioned distribution}
+    \CommentTok{# eta[i]}
+\NormalTok{    prec.eta[}\DecValTok{1}\NormalTok{] <-}\StringTok{ }\NormalTok{(rho }\OperatorTok{*}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(c[}\DecValTok{1}\NormalTok{]) }\OperatorTok{*}\StringTok{ }\KeywordTok{sum}\NormalTok{(sqrt.c.adj[index[}\DecValTok{1}\NormalTok{]}\OperatorTok{:}\NormalTok{index[}\DecValTok{2}\NormalTok{]]) }\OperatorTok{+}\StringTok{ }
+\StringTok{        }\DecValTok{1} \OperatorTok{-}\StringTok{ }\NormalTok{rho)}
+    \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{2}\OperatorTok{:}\NormalTok{Nareas) \{}
+\NormalTok{        prec.eta[i] <-}\StringTok{ }\NormalTok{(rho }\OperatorTok{*}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(c[i]) }\OperatorTok{*}\StringTok{ }
+\StringTok{            }\KeywordTok{sum}\NormalTok{(sqrt.c.adj[(index[i] }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{)}\OperatorTok{:}\NormalTok{index[i }\OperatorTok{+}\StringTok{ }
+\StringTok{                }\DecValTok{1}\NormalTok{]]) }\OperatorTok{+}\StringTok{ }\DecValTok{1} \OperatorTok{-}\StringTok{ }\NormalTok{rho)}
+\NormalTok{    \}}
+    \CommentTok{# Mean of conditioned distribution eta[i]}
+\NormalTok{    mean.eta[}\DecValTok{1}\NormalTok{] <-}\StringTok{ }\NormalTok{(rho }\OperatorTok{*}\StringTok{ }\KeywordTok{inprod2}\NormalTok{(sqrt.c.adj[index[}\DecValTok{1}\NormalTok{]}\OperatorTok{:}\NormalTok{index[}\DecValTok{2}\NormalTok{]], }
+\NormalTok{        eta.adj[index[}\DecValTok{1}\NormalTok{]}\OperatorTok{:}\NormalTok{index[}\DecValTok{2}\NormalTok{]]))}\OperatorTok{/}\NormalTok{(rho }\OperatorTok{*}\StringTok{ }
+\StringTok{        }\KeywordTok{sum}\NormalTok{(sqrt.c.adj[index[}\DecValTok{1}\NormalTok{]}\OperatorTok{:}\NormalTok{index[}\DecValTok{2}\NormalTok{]]) }\OperatorTok{+}\StringTok{ }
+\StringTok{        }\DecValTok{1} \OperatorTok{-}\StringTok{ }\NormalTok{rho)}
+    \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{2}\OperatorTok{:}\NormalTok{Nareas) \{}
+\NormalTok{        mean.eta[i] <-}\StringTok{ }\NormalTok{(rho }\OperatorTok{*}\StringTok{ }\KeywordTok{inprod2}\NormalTok{(sqrt.c.adj[(index[i] }\OperatorTok{+}\StringTok{ }
+\StringTok{            }\DecValTok{1}\NormalTok{)}\OperatorTok{:}\NormalTok{index[i }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{]], eta.adj[(index[i] }\OperatorTok{+}\StringTok{ }
+\StringTok{            }\DecValTok{1}\NormalTok{)}\OperatorTok{:}\NormalTok{index[i }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{]]))}\OperatorTok{/}\NormalTok{(rho }\OperatorTok{*}\StringTok{ }\KeywordTok{sum}\NormalTok{(sqrt.c.adj[(index[i] }\OperatorTok{+}\StringTok{ }
+\StringTok{            }\DecValTok{1}\NormalTok{)}\OperatorTok{:}\NormalTok{index[i }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{]]) }\OperatorTok{+}\StringTok{ }\DecValTok{1} \OperatorTok{-}\StringTok{ }\NormalTok{rho)}
+\NormalTok{    \}}
+    \CommentTok{# Sum-to-zero restriction for spatial}
+    \CommentTok{# effects}
+\NormalTok{    ceros <-}\StringTok{ }\DecValTok{0}
+\NormalTok{    ceros }\OperatorTok{~}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(sum.eta, }\DecValTok{10}\NormalTok{)}
+\NormalTok{    sum.eta <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(eta[])}
+    \CommentTok{# Other prior distributions}
+\NormalTok{    mu }\OperatorTok{~}\StringTok{ }\KeywordTok{dflat}\NormalTok{()}
+\NormalTok{    sd.eta }\OperatorTok{~}\StringTok{ }\KeywordTok{dunif}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{5}\NormalTok{)}
+\NormalTok{    rho }\OperatorTok{~}\StringTok{ }\KeywordTok{dunif}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{\}}
+\CommentTok{# Object where the results for each}
+\CommentTok{# disease will be saved}
+\NormalTok{results.Leroux <-}\StringTok{ }\KeywordTok{list}\NormalTok{()}
+\CommentTok{# Run Leroux model for each disease}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{15}\NormalTok{) \{}
+    \CommentTok{# }\AlertTok{ATTENTION}\CommentTok{: Specify spatial weights}
+    \CommentTok{# For unitary weights:}
+\NormalTok{    w <-}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, }\KeywordTok{length}\NormalTok{(carto.wb}\OperatorTok{$}\NormalTok{adj))}
+    \CommentTok{# For adaptive weights:}
+\NormalTok{    w <-}\StringTok{ }\KeywordTok{c}\NormalTok{(results.AdaptiveLeroux[[i]]}\OperatorTok{$}\NormalTok{mean}\OperatorTok{$}\NormalTok{c)}
+    \CommentTok{# Data}
+\NormalTok{    data <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{O =} \KeywordTok{apply}\NormalTok{(Obs[, sex, , causes[i]], }
+        \DecValTok{2}\NormalTok{, sum), }\DataTypeTok{E =} \KeywordTok{apply}\NormalTok{(Exp[, sex, , causes[i]], }
+        \DecValTok{2}\NormalTok{, sum), }\DataTypeTok{Nareas =} \KeywordTok{dim}\NormalTok{(Obs)[}\DecValTok{3}\NormalTok{], }\DataTypeTok{adj =}\NormalTok{ carto.wb}\OperatorTok{$}\NormalTok{adj, }
+        \DataTypeTok{n.adj =} \KeywordTok{length}\NormalTok{(carto.wb}\OperatorTok{$}\NormalTok{adj), }\DataTypeTok{num =}\NormalTok{ carto.wb}\OperatorTok{$}\NormalTok{num, }
+        \DataTypeTok{index =}\NormalTok{ index, }\DataTypeTok{c =}\NormalTok{ w)}
+    \CommentTok{# Initial values}
+\NormalTok{    initials <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{() \{}
+        \KeywordTok{list}\NormalTok{(}\DataTypeTok{mu =} \KeywordTok{rnorm}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }\DataTypeTok{sd.eta =} \KeywordTok{runif}\NormalTok{(}\DecValTok{1}\NormalTok{, }
+            \DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }\DataTypeTok{eta =} \KeywordTok{rnorm}\NormalTok{(data}\OperatorTok{$}\NormalTok{Nareas))}
+\NormalTok{    \}}
+    \CommentTok{# Variables to retrive}
+\NormalTok{    param <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"mu"}\NormalTok{, }\StringTok{"lambda"}\NormalTok{, }\StringTok{"sd.eta"}\NormalTok{, }
+        \StringTok{"eta"}\NormalTok{, }\StringTok{"SMR"}\NormalTok{, }\StringTok{"rho"}\NormalTok{)}
+\NormalTok{    results.Leroux[[i]] <-}\StringTok{ }\KeywordTok{pbugs}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ data, }
+        \DataTypeTok{inits =}\NormalTok{ initials, }\DataTypeTok{parameters.to.save =}\NormalTok{ param, }
+        \DataTypeTok{model =}\NormalTok{ Leroux_model, }\DataTypeTok{n.iter =} \FloatTok{1e+05}\NormalTok{, }
+        \DataTypeTok{n.burnin =} \DecValTok{30000}\NormalTok{, }\DataTypeTok{n.chains =} \DecValTok{3}\NormalTok{, }\DataTypeTok{DIC =}\NormalTok{ F)}
+\NormalTok{\}}
+\CommentTok{# For the model with unitary weights}
+\KeywordTok{save}\NormalTok{(results.Leroux, }\DataTypeTok{file =} \StringTok{"Results/results.Leroux.unitaryw.RData"}\NormalTok{)}
+\CommentTok{# For the model with adaptive weights}
+\KeywordTok{save}\NormalTok{(results.Leroux, }\DataTypeTok{file =} \StringTok{"Results/results.Leroux.adaptw.RData"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{\texorpdfstring{2. Estimated spatial weights \(c_i\) with
+multivariate adaptive BYM and Leroux models for each census tract of
+Valencia according to all 15 diseases in the data set (Section 4.1,
+Figure 1 in
+paper)}{2. Estimated spatial weights c\_i with multivariate adaptive BYM and Leroux models for each census tract of Valencia according to all 15 diseases in the data set (Section 4.1, Figure 1 in paper)}}\label{estimated-spatial-weights-c_i-with-multivariate-adaptive-bym-and-leroux-models-for-each-census-tract-of-valencia-according-to-all-15-diseases-in-the-data-set-section-4.1-figure-1-in-paper}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(RColorBrewer)}
+\KeywordTok{library}\NormalTok{(sp)}
+\CommentTok{# Results of the multivariate adaptive}
+\CommentTok{# BYM and Leroux models}
+\KeywordTok{load}\NormalTok{(}\StringTok{"Results/results.AdaptiveBYM.15diseases.RData"}\NormalTok{)}
+\KeywordTok{load}\NormalTok{(}\StringTok{"Results/results.AdaptiveLeroux.15diseases.RData"}\NormalTok{)}
+\NormalTok{palette <-}\StringTok{ }\KeywordTok{brewer.pal}\NormalTok{(}\DecValTok{7}\NormalTok{, }\StringTok{"YlOrRd"}\NormalTok{)[}\DecValTok{7}\OperatorTok{:}\DecValTok{1}\NormalTok{]}
+\NormalTok{intervals_c <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.3}\NormalTok{, }\FloatTok{0.7}\NormalTok{, }\DecValTok{1}\NormalTok{, }\FloatTok{1.2}\NormalTok{, }\FloatTok{1.4}\NormalTok{, }
+    \FloatTok{1.6}\NormalTok{, }\FloatTok{2.05}\NormalTok{)}
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{oma =} \KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{0}\NormalTok{), }\DataTypeTok{mar =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }
+    \DecValTok{0}\NormalTok{), }\DataTypeTok{mfrow =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{), }\DataTypeTok{xpd =} \OtherTok{NA}\NormalTok{)}
+\CommentTok{# Estimated spatial weights with the}
+\CommentTok{# multivariate adaptive BYM model}
+\CommentTok{# according to all 15 diseases in the}
+\CommentTok{# data set}
+\KeywordTok{plot}\NormalTok{(carto, }\DataTypeTok{col =}\NormalTok{ palette[}\KeywordTok{cut}\NormalTok{(results.AdaptiveBYM}\OperatorTok{$}\NormalTok{mean}\OperatorTok{$}\NormalTok{c, }
+\NormalTok{    intervals_c)], }\DataTypeTok{xlim =} \KeywordTok{c}\NormalTok{(}\OperatorTok{-}\FloatTok{0.4430475}\NormalTok{, }\OperatorTok{-}\FloatTok{0.2739941}\NormalTok{), }
+    \DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\FloatTok{39.45547}\NormalTok{, }\FloatTok{39.55039}\NormalTok{), }\DataTypeTok{main =} \StringTok{"Adaptive BYM model"}\NormalTok{)}
+\CommentTok{# Estimated spatial weights with the}
+\CommentTok{# multivariate adaptive Leroux model}
+\CommentTok{# according to all 15 diseases in the}
+\CommentTok{# data set}
+\KeywordTok{plot}\NormalTok{(carto, }\DataTypeTok{col =}\NormalTok{ palette[}\KeywordTok{cut}\NormalTok{(results.AdaptiveLeroux}\OperatorTok{$}\NormalTok{mean}\OperatorTok{$}\NormalTok{c, }
+\NormalTok{    intervals_c)], }\DataTypeTok{xlim =} \KeywordTok{c}\NormalTok{(}\OperatorTok{-}\FloatTok{0.4430475}\NormalTok{, }\OperatorTok{-}\FloatTok{0.2739941}\NormalTok{), }
+    \DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\FloatTok{39.45547}\NormalTok{, }\FloatTok{39.55039}\NormalTok{), }\DataTypeTok{main =} \StringTok{"Adaptive Leroux model"}\NormalTok{)}
+\KeywordTok{legend}\NormalTok{(}\OperatorTok{-}\FloatTok{0.4870006}\NormalTok{, }\FloatTok{39.49428}\NormalTok{, }\KeywordTok{levels}\NormalTok{(}\KeywordTok{cut}\NormalTok{(results.AdaptiveBYM}\OperatorTok{$}\NormalTok{mean}\OperatorTok{$}\NormalTok{c, }
+\NormalTok{    intervals_c)), }\DataTypeTok{title =} \StringTok{" "}\NormalTok{, }\DataTypeTok{border =} \OtherTok{NULL}\NormalTok{, }
+    \DataTypeTok{fill =}\NormalTok{ paleta, }\DataTypeTok{bty =} \StringTok{"n"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{3. Standardized Mortality Ratios for studied mortality causes
+in Valencia estimated with the BYM (upper row) and Leroux (lower row)
+models and with spatial weights matrices of either unitary weights
+(left) or using the values obtained from the multivariate analysis of 14
+diseases (all mortality causes of study except the evaluated cause)
+(Section 1, supplementary material in
+paper)}\label{standardized-mortality-ratios-for-studied-mortality-causes-in-valencia-estimated-with-the-bym-upper-row-and-leroux-lower-row-models-and-with-spatial-weights-matrices-of-either-unitary-weights-left-or-using-the-values-obtained-from-the-multivariate-analysis-of-14-diseases-all-mortality-causes-of-study-except-the-evaluated-cause-section-1-supplementary-material-in-paper}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Results of the BYM model with unitary}
+\CommentTok{# weights}
+\KeywordTok{load}\NormalTok{(}\StringTok{"Results/results.BYM.unitaryw.RData"}\NormalTok{)}
+\NormalTok{BYM <-}\StringTok{ }\NormalTok{results.BYM}
+\CommentTok{# Results of the Leroux model with}
+\CommentTok{# unitary weights}
+\KeywordTok{load}\NormalTok{(}\StringTok{"Results/results.Leroux.unitaryw.RData"}\NormalTok{)}
+\NormalTok{Leroux <-}\StringTok{ }\NormalTok{results.Leroux}
+\CommentTok{# Results of the BYM model with adaptive}
+\CommentTok{# weights}
+\KeywordTok{load}\NormalTok{(}\StringTok{"Results/results.BYM.adaptw.RData"}\NormalTok{)}
+\NormalTok{BYM_adapt <-}\StringTok{ }\NormalTok{results.BYM}
+\CommentTok{# Results of the Leroux model with}
+\CommentTok{# adaptive weights}
+\KeywordTok{load}\NormalTok{(}\StringTok{"Results/results.Leroux.adaptw.RData"}\NormalTok{)}
+\NormalTok{Leroux_adapt <-}\StringTok{ }\NormalTok{results.Leroux}
+\CommentTok{# Studied mortality causes}
+\NormalTok{causes_name <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"AIDS"}\NormalTok{, }\StringTok{"Stomach cancer"}\NormalTok{, }
+    \StringTok{"Colorectal cancer"}\NormalTok{, }\StringTok{"Lung cancer"}\NormalTok{, }\StringTok{"Prostate cancer"}\NormalTok{, }
+    \StringTok{"Bladder cancer"}\NormalTok{, }\StringTok{"Hematological cancer"}\NormalTok{, }
+    \StringTok{"Mellitus diabetes"}\NormalTok{, }\StringTok{"Dementia"}\NormalTok{, }\StringTok{"Ischemic heart disease"}\NormalTok{, }
+    \StringTok{"Ictus"}\NormalTok{, }\StringTok{"COPD"}\NormalTok{, }\StringTok{"Liver cirrhosis"}\NormalTok{, }\StringTok{"Suicides"}\NormalTok{, }
+    \StringTok{"Traffic accidents"}\NormalTok{)}
+\NormalTok{Palette.RR <-}\StringTok{ }\KeywordTok{brewer.pal}\NormalTok{(}\DecValTok{7}\NormalTok{, }\StringTok{"BrBG"}\NormalTok{)[}\DecValTok{7}\OperatorTok{:}\DecValTok{1}\NormalTok{]}
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow =} \KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{), }\DataTypeTok{xpd =} \OtherTok{TRUE}\NormalTok{)}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{15}\NormalTok{) \{}
+    \KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow =} \KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{), }\DataTypeTok{xpd =} \OtherTok{TRUE}\NormalTok{)}
+\NormalTok{    aux <-}\StringTok{ }\KeywordTok{cut}\NormalTok{(BYM[[i]]}\OperatorTok{$}\NormalTok{mean}\OperatorTok{$}\NormalTok{SMR, }\KeywordTok{c}\NormalTok{(}\OperatorTok{-}\DecValTok{100}\NormalTok{, }
+        \FloatTok{0.67}\NormalTok{, }\FloatTok{0.8}\NormalTok{, }\FloatTok{0.91}\NormalTok{, }\FloatTok{1.1}\NormalTok{, }\FloatTok{1.25}\NormalTok{, }\FloatTok{1.5}\NormalTok{, }
+        \DecValTok{100}\NormalTok{))}
+    \KeywordTok{plot}\NormalTok{(carto, }\DataTypeTok{col =}\NormalTok{ Palette.RR[aux], }\DataTypeTok{main =} \KeywordTok{paste0}\NormalTok{(}\StringTok{"BYM model"}\NormalTok{), }
+        \DataTypeTok{xlim =} \KeywordTok{c}\NormalTok{(}\OperatorTok{-}\FloatTok{0.4430475}\NormalTok{, }\OperatorTok{-}\FloatTok{0.2739941}\NormalTok{), }
+        \DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\FloatTok{39.45547}\NormalTok{, }\FloatTok{39.55039}\NormalTok{), }\DataTypeTok{cex.main =} \FloatTok{1.5}\NormalTok{)}
+\NormalTok{    aux <-}\StringTok{ }\KeywordTok{cut}\NormalTok{(BYM_adapt[[i]]}\OperatorTok{$}\NormalTok{mean}\OperatorTok{$}\NormalTok{SMR, }\KeywordTok{c}\NormalTok{(}\OperatorTok{-}\DecValTok{100}\NormalTok{, }
+        \FloatTok{0.67}\NormalTok{, }\FloatTok{0.8}\NormalTok{, }\FloatTok{0.91}\NormalTok{, }\FloatTok{1.1}\NormalTok{, }\FloatTok{1.25}\NormalTok{, }\FloatTok{1.5}\NormalTok{, }
+        \DecValTok{100}\NormalTok{))}
+    \KeywordTok{plot}\NormalTok{(carto, }\DataTypeTok{col =}\NormalTok{ Palette.RR[aux], }\DataTypeTok{main =} \KeywordTok{paste0}\NormalTok{(}\StringTok{"Adaptive BYM model"}\NormalTok{), }
+        \DataTypeTok{xlim =} \KeywordTok{c}\NormalTok{(}\OperatorTok{-}\FloatTok{0.4430475}\NormalTok{, }\OperatorTok{-}\FloatTok{0.2739941}\NormalTok{), }
+        \DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\FloatTok{39.45547}\NormalTok{, }\FloatTok{39.55039}\NormalTok{), }\DataTypeTok{cex.main =} \FloatTok{1.5}\NormalTok{)}
+\NormalTok{    aux <-}\StringTok{ }\KeywordTok{cut}\NormalTok{(Leroux[[i]]}\OperatorTok{$}\NormalTok{mean}\OperatorTok{$}\NormalTok{SMR, }\KeywordTok{c}\NormalTok{(}\OperatorTok{-}\DecValTok{100}\NormalTok{, }
+        \FloatTok{0.67}\NormalTok{, }\FloatTok{0.8}\NormalTok{, }\FloatTok{0.91}\NormalTok{, }\FloatTok{1.1}\NormalTok{, }\FloatTok{1.25}\NormalTok{, }\FloatTok{1.5}\NormalTok{, }
+        \DecValTok{100}\NormalTok{))}
+    \KeywordTok{plot}\NormalTok{(carto, }\DataTypeTok{col =}\NormalTok{ Palette.RR[aux], }\DataTypeTok{main =} \KeywordTok{paste0}\NormalTok{(}\StringTok{"Leroux model"}\NormalTok{), }
+        \DataTypeTok{xlim =} \KeywordTok{c}\NormalTok{(}\OperatorTok{-}\FloatTok{0.4430475}\NormalTok{, }\OperatorTok{-}\FloatTok{0.2739941}\NormalTok{), }
+        \DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\FloatTok{39.45547}\NormalTok{, }\FloatTok{39.55039}\NormalTok{), }\DataTypeTok{cex.main =} \FloatTok{1.5}\NormalTok{)}
+\NormalTok{    aux <-}\StringTok{ }\KeywordTok{cut}\NormalTok{(Leroux_adapt[[i]]}\OperatorTok{$}\NormalTok{mean}\OperatorTok{$}\NormalTok{SMR, }
+        \KeywordTok{c}\NormalTok{(}\OperatorTok{-}\DecValTok{100}\NormalTok{, }\FloatTok{0.67}\NormalTok{, }\FloatTok{0.8}\NormalTok{, }\FloatTok{0.91}\NormalTok{, }\FloatTok{1.1}\NormalTok{, }\FloatTok{1.25}\NormalTok{, }
+            \FloatTok{1.5}\NormalTok{, }\DecValTok{100}\NormalTok{))}
+    \KeywordTok{plot}\NormalTok{(carto, }\DataTypeTok{col =}\NormalTok{ Palette.RR[aux], }\DataTypeTok{main =} \KeywordTok{paste0}\NormalTok{(}\StringTok{"Adaptive Leroux model"}\NormalTok{), }
+        \DataTypeTok{xlim =} \KeywordTok{c}\NormalTok{(}\OperatorTok{-}\FloatTok{0.4430475}\NormalTok{, }\OperatorTok{-}\FloatTok{0.2739941}\NormalTok{), }
+        \DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\FloatTok{39.45547}\NormalTok{, }\FloatTok{39.55039}\NormalTok{), }\DataTypeTok{cex.main =} \FloatTok{1.5}\NormalTok{)}
+    \KeywordTok{par}\NormalTok{(}\DataTypeTok{xpd =} \OtherTok{NA}\NormalTok{)}
+    \KeywordTok{legend}\NormalTok{(}\OperatorTok{-}\FloatTok{0.5253527}\NormalTok{, }\FloatTok{39.61729}\NormalTok{, }\KeywordTok{c}\NormalTok{(}\StringTok{"< 0.67"}\NormalTok{, }
+        \StringTok{"0.67 - 0.80"}\NormalTok{, }\StringTok{"0.80 - 0.91"}\NormalTok{, }\StringTok{"0.91 - 1.10"}\NormalTok{, }
+        \StringTok{"1.10 - 1.25"}\NormalTok{, }\StringTok{"1.25 - 1.50"}\NormalTok{, }\StringTok{"> 1.50"}\NormalTok{), }
+        \DataTypeTok{title =} \StringTok{"SMR"}\NormalTok{, }\DataTypeTok{border =} \OtherTok{NULL}\NormalTok{, }\DataTypeTok{fill =}\NormalTok{ Palette.RR, }
+        \DataTypeTok{bty =} \StringTok{"n"}\NormalTok{)}
+    \KeywordTok{mtext}\NormalTok{(causes_name[i], }\DataTypeTok{side =} \DecValTok{3}\NormalTok{, }\DataTypeTok{cex =} \DecValTok{2}\NormalTok{, }
+        \DataTypeTok{line =} \DecValTok{0}\NormalTok{, }\DataTypeTok{outer =} \OtherTok{TRUE}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\section{4. DIC for the BYM and Leroux models with adaptive and
+unweighed spatial weights matrices (Section 4.2, Table 1 in
+paper)}\label{dic-for-the-bym-and-leroux-models-with-adaptive-and-unweighed-spatial-weights-matrices-section-4.2-table-1-in-paper}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Studied mortality causes}
+\NormalTok{causes <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{9}\OperatorTok{:}\DecValTok{12}\NormalTok{, }\DecValTok{15}\OperatorTok{:}\DecValTok{21}\NormalTok{)}
+\CommentTok{# Observed mortality cases}
+\NormalTok{Observados <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(Obs[, , , causes], }\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }
+    \DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{), sum)}
+\CommentTok{# Function for DICs calculation}
+\NormalTok{CalculaDIC <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(mu, O, }\DataTypeTok{save =} \OtherTok{FALSE}\NormalTok{) \{}
+\NormalTok{    D <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(mu, }\DecValTok{1}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) \{}
+        \OperatorTok{-}\DecValTok{2} \OperatorTok{*}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\KeywordTok{dpois}\NormalTok{(O, x, }\DataTypeTok{log =}\NormalTok{ T))}
+\NormalTok{    \})}
+\NormalTok{    Dmedia <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(D)}
+\NormalTok{    mumedia <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(mu, }\DecValTok{2}\NormalTok{, mean)}
+\NormalTok{    DenMedia <-}\StringTok{ }\OperatorTok{-}\DecValTok{2} \OperatorTok{*}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\KeywordTok{dpois}\NormalTok{(O, mumedia, }
+        \DataTypeTok{log =}\NormalTok{ T))}
+    \ControlFlowTok{if}\NormalTok{ (save }\OperatorTok{==}\StringTok{ }\OtherTok{TRUE}\NormalTok{) \{}
+        \KeywordTok{return}\NormalTok{(}\KeywordTok{c}\NormalTok{(Dmedia, Dmedia }\OperatorTok{-}\StringTok{ }\NormalTok{DenMedia, }
+            \DecValTok{2} \OperatorTok{*}\StringTok{ }\NormalTok{Dmedia }\OperatorTok{-}\StringTok{ }\NormalTok{DenMedia))}
+\NormalTok{    \}}
+    \KeywordTok{cat}\NormalTok{(}\StringTok{"D = "}\NormalTok{, Dmedia, }\StringTok{"pD = "}\NormalTok{, Dmedia }\OperatorTok{-}\StringTok{ }
+\StringTok{        }\NormalTok{DenMedia, }\StringTok{"DIC = "}\NormalTok{, }\DecValTok{2} \OperatorTok{*}\StringTok{ }\NormalTok{Dmedia }\OperatorTok{-}\StringTok{ }
+\StringTok{        }\NormalTok{DenMedia, }\StringTok{" }\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{\}}
+\CommentTok{# Objects where the DIC of the models for}
+\CommentTok{# each disease will be saved}
+\NormalTok{DIC_BYM <-}\StringTok{ }\KeywordTok{c}\NormalTok{()}
+\NormalTok{DIC_BYMadapt <-}\StringTok{ }\KeywordTok{c}\NormalTok{()}
+\NormalTok{DIC_Leroux <-}\StringTok{ }\KeywordTok{c}\NormalTok{()}
+\NormalTok{DIC_Lerouxadapt <-}\StringTok{ }\KeywordTok{c}\NormalTok{()}
+\ControlFlowTok{for}\NormalTok{ (j }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{15}\NormalTok{) \{}
+    \CommentTok{# DIC BYM model with unitary weights}
+\NormalTok{    DIC_BYM[j] <-}\StringTok{ }\KeywordTok{CalculaDIC}\NormalTok{(}\DataTypeTok{mu =}\NormalTok{ BYM[[j]]}\OperatorTok{$}\NormalTok{sims.list}\OperatorTok{$}\NormalTok{lambda, }
+        \DataTypeTok{O =}\NormalTok{ Observados[sex, , j], }\DataTypeTok{save =} \OtherTok{TRUE}\NormalTok{)[}\DecValTok{3}\NormalTok{]}
+    \CommentTok{# DIC BYM model with adaptive weights}
+\NormalTok{    DIC_BYMadapt[j] <-}\StringTok{ }\KeywordTok{CalculaDIC}\NormalTok{(}\DataTypeTok{mu =}\NormalTok{ BYM_adapt[[j]]}\OperatorTok{$}\NormalTok{sims.list}\OperatorTok{$}\NormalTok{lambda, }
+        \DataTypeTok{O =}\NormalTok{ Observados[sex, , j], }\DataTypeTok{save =} \OtherTok{TRUE}\NormalTok{)[}\DecValTok{3}\NormalTok{]}
+    \CommentTok{# DIC Leroux model with unitary weights}
+\NormalTok{    DIC_Leroux[j] <-}\StringTok{ }\KeywordTok{CalculaDIC}\NormalTok{(}\DataTypeTok{mu =}\NormalTok{ Leroux[[j]]}\OperatorTok{$}\NormalTok{sims.list}\OperatorTok{$}\NormalTok{lambda, }
+        \DataTypeTok{O =}\NormalTok{ Observados[sex, , j], }\DataTypeTok{save =} \OtherTok{TRUE}\NormalTok{)[}\DecValTok{3}\NormalTok{]}
+    \CommentTok{# DIC Leroux model with adaptive weights}
+\NormalTok{    DIC_Lerouxadapt[j] <-}\StringTok{ }\KeywordTok{CalculaDIC}\NormalTok{(}\DataTypeTok{mu =}\NormalTok{ Leroux_adapt[[j]]}\OperatorTok{$}\NormalTok{sims.list}\OperatorTok{$}\NormalTok{lambda, }
+        \DataTypeTok{O =}\NormalTok{ Observados[sex, , j], }\DataTypeTok{save =} \OtherTok{TRUE}\NormalTok{)[}\DecValTok{3}\NormalTok{]}
+\NormalTok{\}}
+\KeywordTok{kable}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(causes_name, DIC_BYM, DIC_BYMadapt, }
+\NormalTok{    DIC_Leroux, DIC_Lerouxadapt), }\DataTypeTok{digits =} \DecValTok{2}\NormalTok{, }
+    \DataTypeTok{col.names =} \KeywordTok{c}\NormalTok{(}\StringTok{"Causes"}\NormalTok{, }\StringTok{"BYM model Adjacency"}\NormalTok{, }
+        \StringTok{"BYM model Adaptive"}\NormalTok{, }\StringTok{"Leroux model Adjacency"}\NormalTok{, }
+        \StringTok{"Leroux model Adaptive"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\section{5. CPO for the BYM and Leroux models with adaptive and
+unweighed spatial weights matrices (Section 4.2, Table 1 in
+paper)}\label{cpo-for-the-bym-and-leroux-models-with-adaptive-and-unweighed-spatial-weights-matrices-section-4.2-table-1-in-paper}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Objects where the likelihood of the}
+\CommentTok{# models for each simulation, geographic}
+\CommentTok{# unit and disease will be saved}
+\NormalTok{likelihood_BYM <-}\StringTok{ }\KeywordTok{array}\NormalTok{(}\OtherTok{NA}\NormalTok{, }\DataTypeTok{dim =} \KeywordTok{c}\NormalTok{(}\DecValTok{1002}\NormalTok{, }
+    \DecValTok{531}\NormalTok{, }\DecValTok{15}\NormalTok{))}
+\NormalTok{likelihood_BYMadapt <-}\StringTok{ }\KeywordTok{array}\NormalTok{(}\OtherTok{NA}\NormalTok{, }\DataTypeTok{dim =} \KeywordTok{c}\NormalTok{(}\DecValTok{1002}\NormalTok{, }
+    \DecValTok{531}\NormalTok{, }\DecValTok{15}\NormalTok{))}
+\NormalTok{likelihood_Leroux <-}\StringTok{ }\KeywordTok{array}\NormalTok{(}\OtherTok{NA}\NormalTok{, }\DataTypeTok{dim =} \KeywordTok{c}\NormalTok{(}\DecValTok{1002}\NormalTok{, }
+    \DecValTok{531}\NormalTok{, }\DecValTok{15}\NormalTok{))}
+\NormalTok{likelihood_Lerouxadapt <-}\StringTok{ }\KeywordTok{array}\NormalTok{(}\OtherTok{NA}\NormalTok{, }\DataTypeTok{dim =} \KeywordTok{c}\NormalTok{(}\DecValTok{1002}\NormalTok{, }
+    \DecValTok{531}\NormalTok{, }\DecValTok{15}\NormalTok{))}
+\CommentTok{# Objects where the CPO of the models for}
+\CommentTok{# each geographic unit and disease will}
+\CommentTok{# be saved}
+\NormalTok{CPO_BYM <-}\StringTok{ }\KeywordTok{array}\NormalTok{(}\OtherTok{NA}\NormalTok{, }\DataTypeTok{dim =} \KeywordTok{c}\NormalTok{(}\DecValTok{531}\NormalTok{, }\DecValTok{15}\NormalTok{))}
+\NormalTok{CPO_BYMadapt <-}\StringTok{ }\KeywordTok{array}\NormalTok{(}\OtherTok{NA}\NormalTok{, }\DataTypeTok{dim =} \KeywordTok{c}\NormalTok{(}\DecValTok{531}\NormalTok{, }\DecValTok{15}\NormalTok{))}
+\NormalTok{CPO_Leroux <-}\StringTok{ }\KeywordTok{array}\NormalTok{(}\OtherTok{NA}\NormalTok{, }\DataTypeTok{dim =} \KeywordTok{c}\NormalTok{(}\DecValTok{531}\NormalTok{, }\DecValTok{15}\NormalTok{))}
+\NormalTok{CPO_Lerouxadapt <-}\StringTok{ }\KeywordTok{array}\NormalTok{(}\OtherTok{NA}\NormalTok{, }\DataTypeTok{dim =} \KeywordTok{c}\NormalTok{(}\DecValTok{531}\NormalTok{, }
+    \DecValTok{15}\NormalTok{))}
+\CommentTok{# Likelihood of the models for each}
+\CommentTok{# disease, geographic unit and MCMC}
+\CommentTok{# simulation}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{15}\NormalTok{) \{}
+    \ControlFlowTok{for}\NormalTok{ (j }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{531}\NormalTok{) \{}
+        \ControlFlowTok{for}\NormalTok{ (k }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{1002}\NormalTok{) \{}
+\NormalTok{            likelihood_BYM[k, j, i] <-}\StringTok{ }\KeywordTok{dpois}\NormalTok{(Observados[sex, }
+\NormalTok{                j, i], BYM[[i]]}\OperatorTok{$}\NormalTok{sims.list}\OperatorTok{$}\NormalTok{lambda[k, }
+\NormalTok{                j])}
+\NormalTok{            likelihood_BYMadapt[k, j, i] <-}\StringTok{ }\KeywordTok{dpois}\NormalTok{(Observados[sex, }
+\NormalTok{                j, i], BYM_adapt[[i]]}\OperatorTok{$}\NormalTok{sims.list}\OperatorTok{$}\NormalTok{lambda[k, }
+\NormalTok{                j])}
+\NormalTok{            likelihood_Leroux[k, j, i] <-}\StringTok{ }\KeywordTok{dpois}\NormalTok{(Observados[sex, }
+\NormalTok{                j, i], Leroux[[i]]}\OperatorTok{$}\NormalTok{sims.list}\OperatorTok{$}\NormalTok{lambda[k, }
+\NormalTok{                j])}
+\NormalTok{            likelihood_Lerouxadapt[k, j, }
+\NormalTok{                i] <-}\StringTok{ }\KeywordTok{dpois}\NormalTok{(Observados[sex, }
+\NormalTok{                j, i], Leroux_adapt[[i]]}\OperatorTok{$}\NormalTok{sims.list}\OperatorTok{$}\NormalTok{lambda[k, }
+\NormalTok{                j])}
+\NormalTok{        \}}
+\NormalTok{    \}}
+\NormalTok{\}}
+\CommentTok{# CPO of the models for each disease and}
+\CommentTok{# geographic unit}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{15}\NormalTok{) \{}
+    \ControlFlowTok{for}\NormalTok{ (j }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{531}\NormalTok{) \{}
+\NormalTok{        CPO_BYM[j, i] <-}\StringTok{ }\DecValTok{1}\OperatorTok{/}\NormalTok{(}\KeywordTok{mean}\NormalTok{(}\DecValTok{1}\OperatorTok{/}\NormalTok{likelihood_BYM[, }
+\NormalTok{            j, i]))}
+\NormalTok{        CPO_BYMadapt[j, i] <-}\StringTok{ }\DecValTok{1}\OperatorTok{/}\NormalTok{(}\KeywordTok{mean}\NormalTok{(}\DecValTok{1}\OperatorTok{/}\NormalTok{likelihood_BYMadapt[, }
+\NormalTok{            j, i]))}
+\NormalTok{        CPO_Leroux[j, i] <-}\StringTok{ }\DecValTok{1}\OperatorTok{/}\NormalTok{(}\KeywordTok{mean}\NormalTok{(}\DecValTok{1}\OperatorTok{/}\NormalTok{likelihood_Leroux[, }
+\NormalTok{            j, i]))}
+\NormalTok{        CPO_Lerouxadapt[j, i] <-}\StringTok{ }\DecValTok{1}\OperatorTok{/}\NormalTok{(}\KeywordTok{mean}\NormalTok{(}\DecValTok{1}\OperatorTok{/}\NormalTok{likelihood_Lerouxadapt[, }
+\NormalTok{            j, i]))}
+\NormalTok{    \}}
+\NormalTok{\}}
+\CommentTok{# Total CPO of the models}
+\NormalTok{CPO_TOTAL_BYM <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(}\KeywordTok{apply}\NormalTok{(CPO_BYM, }\DecValTok{2}\NormalTok{, }
+    \ControlFlowTok{function}\NormalTok{(x) \{}
+        \KeywordTok{log}\NormalTok{(x)}
+\NormalTok{    \}), }\DecValTok{2}\NormalTok{, sum)}
+\NormalTok{CPO_TOTAL_Leroux <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(}\KeywordTok{apply}\NormalTok{(CPO_Leroux, }
+    \DecValTok{2}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) \{}
+        \KeywordTok{log}\NormalTok{(x)}
+\NormalTok{    \}), }\DecValTok{2}\NormalTok{, sum)}
+\NormalTok{CPO_TOTAL_BYMadapt <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(}\KeywordTok{apply}\NormalTok{(CPO_BYMadapt, }
+    \DecValTok{2}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) \{}
+        \KeywordTok{log}\NormalTok{(x)}
+\NormalTok{    \}), }\DecValTok{2}\NormalTok{, sum)}
+\NormalTok{CPO_TOTAL_Lerouxadapt <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(}\KeywordTok{apply}\NormalTok{(CPO_Lerouxadapt, }
+    \DecValTok{2}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) \{}
+        \KeywordTok{log}\NormalTok{(x)}
+\NormalTok{    \}), }\DecValTok{2}\NormalTok{, sum)}
+\KeywordTok{kable}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(causes_name, CPO_TOTAL_BYM, }
+\NormalTok{    CPO_TOTAL_BYMadapt, CPO_TOTAL_Leroux, }
+\NormalTok{    CPO_TOTAL_Lerouxadapt), }\DataTypeTok{col.names =} \KeywordTok{c}\NormalTok{(}\StringTok{"Causes"}\NormalTok{, }
+    \StringTok{"BYM model Adjacency"}\NormalTok{, }\StringTok{"BYM model Adaptive"}\NormalTok{, }
+    \StringTok{"Leroux model Adjacency"}\NormalTok{, }\StringTok{"Leroux model Adaptive"}\NormalTok{), }
+    \DataTypeTok{digits =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\end{document}
